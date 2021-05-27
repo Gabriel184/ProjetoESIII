@@ -1,0 +1,10 @@
+body{
+    background-color: white;
+}
+
+.cabecalho{
+
+    display: flex;
+    justify-content: center;
+
+}
