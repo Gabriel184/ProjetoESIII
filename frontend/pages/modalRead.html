@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/global/global.css">
+    <link rel="stylesheet" href="../css/modal/modal.css">
+    <link rel="stylesheet" href="../css/modal/modalRead.css">
+    <title>READ MODAL</title>
+
+</head>
+
+
+<body>
+    
+    <button onclick="onModalRead()">Abrir modal</button>
+
+    <div id="container_modal" class="container_modal">
+        
+        <div class="subcontainer_modal">
+
+            <div class="base_modal">
+
+                <div class="titulo_modal">
+                    <p>Dados do Aluno:</p>
+                    <img class="fechar_modal" src="../images/fechar.png" alt="fechar" onclick="offModalRead()">
+                </div>
+
+                <div id="matricula" class="matricula"> 
+
+                    <div class="container_matricula">
+                        <p style="font-weight: bold;">Codigo:</p>
+                        <p>15864</p>
+                    </div>
+
+                    <div class="container_matricula">
+                        <p style="font-weight: bold;">Data de cadastro:</p>
+                        <p>25/01/2021</p>
+                    </div>
+
+                    <div class="container_matricula">
+                        <p style="font-weight: bold;">Turma</p>
+                        <p>3°ADS</p>
+                    </div>
+            
+                </div>
+
+                <div id="aluno" class="aluno">
+
+                    <div class="container_aluno">
+                        <p style="font-weight: bold;">Nome:</p>
+                        <p>Gabriel Henrique</p>
+                    </div>
+                    
+                    <div class="container_aluno">
+                        <p style="font-weight: bold;">Email:</p>
+                        <p>teste@teste.com.br</p>
+                    </div>
+                    
+                    <div class="container_aluno">
+                        <p style="font-weight: bold;">CPF:</p>
+                        <p>123.456.789-90</p>
+                    </div>
+                    
+                    <div class="container_aluno">
+                        <p style="font-weight: bold;">Celular</p>
+                        <p>(11)97564-5588</p> 
+                    </div>
+                    
+                    <div class="container_aluno">
+                        <p style="font-weight: bold;">Data Nascimento:</p>
+                        <p>19/10/2000</p>
+                    </div>
+
+                </div>
+
+                <div id="endereco" class="endereco">
+
+                    <div class="container_endereco">
+                        <p style="font-weight: bold;">Logradouro:</p>
+                        <p>Av. das Nações</p>
+                    </div>
+
+                    <div class="container_endereco">
+                        <p style="font-weight: bold;">Número:</p>
+                        <p>35</p>
+                    </div>
+
+                    <div class="container_endereco">
+                        <p style="font-weight: bold;">Bairro:</p>
+                        <p>Vila do Sol</p>
+                    </div>
+
+                    <div class="container_endereco">
+                        <p style="font-weight: bold;">Complemento:</p>
+                        <p>Apto 37</p>
+                    </div>
+
+                    <div class="container_endereco">
+                        <p style="font-weight: bold;">Cidade:</p>
+                        <p>Valinhos</p>
+                    </div>
+
+                    <div class="container_endereco">
+                        <p style="font-weight: bold;">CEP:</p>
+                        <p>12345-657</p>
+                    </div>
+
+                    <div class="container_endereco">
+                        <p style="font-weight: bold;">UF:</p>
+                        <p>SP</p>
+                    </div>
+
+                </div>
+
+                <div id="curso" class="curso">
+
+                    <div class="container_curso">
+                        <p style="font-weight: bold;">Categoria:</p>
+                        <p>Pós graduação</p>
+                    </div>
+
+                    <div class="container_curso">
+                        <p style="font-weight: bold;">Descrição:</p>
+                        <p>DP. do Rodrigo</p>
+                    </div>
+
+                    <div class="container_curso">
+                        <p style="font-weight: bold;">Duração:</p>
+                        <p>6 Semestres</p>
+                    </div>
+
+                </div>
+
+            </div>
+    
+        </div>
+
+    </div>
+
+</body>
+
+<script>
+
+    function onModalRead(dado){
+
+        var modalRead = document.getElementById("container_modal");
+        modalRead.style.display = "block";
+
+    }
+
+    function offModalRead(){
+
+        var modalRead = document.getElementById("container_modal");
+        modalRead.style.display = "none";
+
+    }
+
+</script>
+
+</html>

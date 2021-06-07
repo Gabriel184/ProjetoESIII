@@ -1,0 +1,239 @@
+/* Div de fundo da Modal */
+.container_modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    font-family: Arial;
+}
+
+/* Div de subcontainer modal */
+.subcontainer_modal {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Div da modal */
+.base_modal {
+    display: block;
+    width: 80%;
+    background-color: #FFFFFF;
+    margin-bottom: 20px;
+}
+
+/* Div de titulo */
+.titulo_modal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: #1C1C1C;
+    color: #D3D3D3;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}
+
+.titulo_modal img {
+    margin: 10px;
+    width: 50px;
+}
+
+.fechar_modal:hover{
+    cursor: pointer;
+}
+/* Div de mensagem */
+.mensagem_modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    color: #1C1C1C;
+    font-size: 15px;
+}
+
+.mensagem_modal img {
+    width: 100px;
+    margin: 5px;
+}
+/* Padding para a tag P */
+.container_modal p {
+    padding: 5px;
+    color: #ffff;
+}
+/* Div de botões da modal */
+.container_botoes_modal {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.item_botao_modal {
+    height: 50px;
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 1s;
+}
+
+.item_botao_modal:hover {
+    width: 30%;
+}
+
+.item_botao_modal p {
+    font-size: 15px;
+    color: #F5F5DC;
+    font-weight: normal;
+    padding: 10px;
+}
+
+/* Caso tenha um formulário dentro da modaçal */
+.mensagem_modal form {
+    width: 98%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+/* Input tipo File */
+.mensagem_modal input[type=file] {
+    width: 100%;
+    text-align: center;
+}
+
+/* Imagem maior */
+.mensagem_modal .imagem_modal_grande {
+    width: 400px;
+    height: 400px;
+}
+
+/* Campos de preenchimentos - checkbox */
+.mensagem_modal form .container_checkbox {
+    display: flex;
+    width: 90%;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.mensagem_modal .container_checkbox h6 {
+    color: #1C1C1C;
+    font-weight: normal;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+
+.mensagem_modal .container_checkbox input[type=checkbox] {
+    width: 15px;
+    text-align: center;
+}
+
+/* Campos de preenchimentos */
+.mensagem_modal form .container {
+    display: flex;
+    width: 90%;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 5px;
+}
+
+.mensagem_modal .container h6 {
+    color: #1C1C1C;
+    font-weight: normal;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+
+.mensagem_modal .container input {
+    border: 1px #4F4F4F solid;
+    border-radius: 3px;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    width: 100%;
+}
+
+.mensagem_modal .container select {
+    width: 100%;
+    height: 40px;
+    font: 14px Arial;
+    border-radius: 3px;
+    text-align: center;
+    text-align-last: center;
+}
+
+/* Auto-complete */
+.mensagem_modal .container .autocomplete {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.mensagem_modal .container .autocomplete-items {
+    position: absolute;
+    font-family: Arial;
+    border: 1px solid #1C1C1C;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+
+.mensagem_modal .container .autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+.mensagem_modal .container .autocomplete-items div:hover {
+    background-color: #BEBEBE;
+    font-weight: bold;
+}
+
+.mensagem_modal .container .autocomplete-active {
+    background-color: DodgerBlue !important;
+    color: #ffffff;
+}
+
+/* Grupos de duas colunas de itens */
+.mensagem_modal .container_horizontal {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row;
+}
+
+.mensagem_modal .container_horizontal div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
