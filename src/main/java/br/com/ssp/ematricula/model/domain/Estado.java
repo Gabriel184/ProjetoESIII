@@ -1,0 +1,19 @@
+package br.com.ssp.ematricula.model.domain;
+
+public class Estado extends EntidadeDominio {
+	private String descricao;
+
+	public Estado(String descricao) {
+		super();
+		this.descricao = descricao;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
+}

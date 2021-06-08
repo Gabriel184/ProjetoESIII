@@ -1,0 +1,12 @@
+Regras de negócio:
+
+1. O aluno que não tiver 18 anos de idade ou não for completar 18 anos no ano prestente, não poderá se matricular em um curso de nível superior ou pós graduação;
+2. Um curso de nível superior ou pós graduação não pode ter mais que 60 matrículas no mesmo semestre;
+3. Um aluno não pode se matricular em mais de um curso ao mesmo tempo;
+4. O aluno que não tiver 15 anos de idade ou não for completar 15 anos no ano prestente, não poderá se matricular em um curso de nível técnico;
+5. Um curso de nível técnico ou de nível profissionalizante não pode ter mais que 35 matrículas no mesmo semestre.
+
+Requisitos Não Funcionais:
+
+1. Os campos relativos ao endereço, exceto o número da residência e o complemento, devem ser de preenchimento automático utilizando a API ViaCep do Correios.
+2. a Visualização dos dados dos registros deve ser simples em tabela, sendo possível visualizar os dados completos de cada registro individualmente ao ser clicado.

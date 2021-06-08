@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(function() {
+
+            function limpa_formulário_cep() {
+                // Limpa valores do formulário de cep.
+                $("#logradouro").val("");
+                $("#numero").val("");
+                $("#complemento").val("");
+                $("#bairro").val("");
+                $("#cidade").val("");
+                $("#estado").val("");
+            }
+            
+            //Quando o campo cep perde o foco.
+            $("#cep").blur(function() {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = $(this).val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        $("#logradouro").val("...");
+                        $("#bairro").val("...");
+                        $("#cidade").val("...");
+                        $("#estado").val("...");
+
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#logradouro").val(dados.logradouro);
+                                $("#bairro").val(dados.bairro);
+                                $("#cidade").val(dados.localidade);
+                                $("#estado").val(dados.uf);
+                            } //end if.
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                limpa_formulário_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            });
+        });
+
+    </script>
+    <title>e-matricula</title>
+</head>
+<body>
+
+    <!-- Inserção de dados de aluno -->
+    <fieldset>
+        <legend>Dados do aluno</legend>
+        <label>Nome:
+        <input name="nome" type="text" id="nome"></label><br>
+        <label>Email:
+        <input name="email" type="text" id="email"></label><br>
+        <label>CPF:
+        <input name="cpf" type="text" id="cpf"></label><br>
+        <label>Telefone:
+        <input name="telefone" type="text" id="telefone"></label><br>
+        <label>Data de nascimento:
+        <input name="data_nascimento" type="date" id="data_nascimento"></label><br>
+    </fieldset>
+
+    <!-- Inserção de endereço -->
+    <fieldset>
+        <legend>Endereço (Insira somente o CEP e o nº da residência)</legend>
+        <label>CEP:
+        <input name="cep" type="text" id="cep"></label><br>
+        <label>Logradouro:
+        <input name="logradouro" type="text" id="logradouro"></label><br>
+        <label>Número:
+        <input name="numero" type="text" id="numero"></label><br>
+        <label>Complemento:
+        <input name="complemento" type="text" id="complemento"></label><br>
+        <label>Bairro:
+        <input name="bairro" type="text" id="bairro"></label><br>
+        <label>Cidade:
+        <input name="cidade" type="text" id="cidade"></label><br>
+        <label>Estado:
+        <input name="estado" type="text" id="estado"></label><br>
+    </fieldset>
+
+    <!-- Seleção de cursos -->
+    <fieldset>
+        <legend>Categoria, curso e turma</legend>
+        <p>
+            <input type="radio" name="categoria" id="ensino-superior" value="Ensino Superior">
+            <label for="ensino-superior">Ensino Superior</label>
+        </p>
+        <p>
+            <input type="radio" name="categoria" id="pos-graduacao" value="Pós Graduação">
+            <label for="pos-graduacao">Pós Graduação</label>
+        </p>
+        <p>
+            <input type="radio" name="categoria" id="ensino-tecnico" value="Ensino Técnico">
+            <label for="ensino-tecnico">Ensino Técnico</label>
+        </p>
+        <p>
+            <input type="radio" name="categoria" id="profissionalizante" value="Profissionalizante">
+            <label for="profissionalizante">Profissionalizante</label>
+        </p>
+        <p>
+            <label>Selecione um curso:
+            <select name="cursos" id="cursos"></select></label><br>
+            <label>Selecione a turma:
+            <select name="turmas" id="turmas">
+                <option value="matutino">Matutino</option>
+                <option value="vespertino">Vespertino</option>
+                <option value="noturno">Noturno</option>
+            </select></label>
+        </p>
+    </fieldset>
+    <input type="submit" value="Enviar" id="enviar">
+    <code id="resultado"></code>
+
+    <!-- Carrega lista de cursos, quando categoria é selecionada -->
+    <script>
+        var categorias = document.getElementsByName('categoria')
+        categorias.forEach(categoria => {
+            categoria.addEventListener('click', function() {
+            $.ajax({
+                url : '/e-matricula/Curso',
+                type : 'get',
+                data : {
+                    categoria : categoria.value,
+                    operacao : 'get'
+                },
+                beforeSend : function() {
+                    $('#resultado').html('REQUESTING...')
+                },
+                success : function(msg) {
+                    $('#resultado').html('')
+                    console.table(msg.status)
+                    console.table(msg.mensagem)
+                    if(msg.status == 'success') {
+                        var cursosSelect = document.getElementById('cursos')
+                        while(cursosSelect.firstChild)
+                            cursosSelect.removeChild(cursosSelect.firstChild)
+                        var cursos = msg.mensagem
+                        cursos.forEach(curso => {
+                            var option = document.createElement('option')
+                            option.appendChild(document.createTextNode(curso.descricao + ' - ' + curso.duracao + ' semestres'))
+                            option.setAttribute('curso_nome',curso.descricao)
+                            option.setAttribute('curso_duracao',curso.duracao)
+                            option.setAttribute('categoria',curso.categoria.descricao)
+                            cursosSelect.appendChild(option)
+                        })
+                    } else {
+                        alert(msg.mensagem)
+                    }
+                }
+            })
+        })})
+    </script>
+
+    <!-- Realiza submissão -->
+    <script>
+        var cursos = document.querySelector('#cursos')
+        var submit = document.getElementById('enviar')
+        submit.addEventListener('click', function() {
+            $.ajax({
+                url : '/e-matricula/Matricula',
+                type : 'get',
+                data : {
+                    operacao : 'salvar',
+                    nome : document.getElementById('nome').value,
+                    email : document.getElementById('email').value,
+                    cpf : document.getElementById('cpf').value,
+                    telefone : document.getElementById('telefone').value,
+                    data_nascimento : document.getElementById('data_nascimento').value,
+                    cep : document.getElementById('cep').value,
+                    logradouro : document.getElementById('logradouro').value,
+                    numero : document.getElementById('numero').value,
+                    complemento : document.getElementById('complemento').value,
+                    bairro : document.getElementById('bairro').value,
+                    cidade : document.getElementById('cidade').value,
+                    estado : document.getElementById('estado').value,
+                    curso_nome : cursos.options[cursos.selectedIndex].getAttribute('curso_nome'),
+                    curso_duracao : cursos.options[cursos.selectedIndex].getAttribute('curso_duracao'),
+                    categoria : cursos.options[cursos.selectedIndex].getAttribute('categoria'),
+                    turma : document.querySelector("#turmas").value
+                },
+                beforeSend : function() {
+                    $('#resultado').html = 'REQUESTING...'
+                },
+                success : function(msg) {
+                    $('#resultado').html = ''
+                    if(msg.status == 'success') {
+						alert(msg.mensagem)
+                    } else {
+                        alert(msg.mensagem)
+                    }
+                }
+
+            })
+        })
+    </script>
+</body>
+</html>

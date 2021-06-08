@@ -1,0 +1,24 @@
+matricula:
+	codigo
+	data_cadastro
+	turma
+	aluno:
+		nome
+		email
+		cpf
+		telefone
+		data_nascimento
+		endereço:
+			codigo
+			cep
+			numero
+			logradouro
+			complemento
+			bairro
+			cidade
+			estado
+	curso:
+		descricao
+		duracao
+		categoria:
+			descricao
