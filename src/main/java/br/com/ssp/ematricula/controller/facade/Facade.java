@@ -9,6 +9,7 @@ import br.com.ssp.ematricula.model.business.ComplementarCodigoEndereco;
 import br.com.ssp.ematricula.model.business.ComplementarCodigoMatricula;
 import br.com.ssp.ematricula.model.business.ComplementarDataCadastro;
 import br.com.ssp.ematricula.model.business.IStrategy;
+import br.com.ssp.ematricula.model.business.ValidarEnderecoUpdate;
 import br.com.ssp.ematricula.model.business.ValidarIdade;
 import br.com.ssp.ematricula.model.business.ValidarLimiteMatriculas;
 import br.com.ssp.ematricula.model.business.ValidarMatriculaUnica;
@@ -59,14 +60,25 @@ public class Facade implements IFacade {
 		
 		rnsCRUD.put("CREATE", rnsCreate);
 		
-		Map<String, List<IStrategy>> rnsUpdate = new HashMap<String, List<IStrategy>>();
-		rnsCRUD.put("UPDATE", rnsUpdate);	
+		Map<String, List<IStrategy>> rnsRead = new HashMap<String, List<IStrategy>>();
+		rnsCRUD.put("READ", rnsRead);
 		
+		Map<String, List<IStrategy>> rnsUpdate = new HashMap<String, List<IStrategy>>();
+		
+		ValidarEnderecoUpdate vEndUpdate = new ValidarEnderecoUpdate();
+		
+		List<IStrategy> rnsUpdateMatricula = new ArrayList<IStrategy>();
+		rnsUpdateMatricula.add(cCodEnd);
+		rnsUpdateMatricula.add(vEndUpdate);
+		
+		rnsUpdate.put(Matricula.class.getName(), rnsUpdateMatricula);
+		rnsCRUD.put("UPDATE", rnsUpdate);
+		
+		Map<String, List<IStrategy>> rnsDelete = new HashMap<String, List<IStrategy>>();
+		rnsCRUD.put("DELETE", rnsDelete);		
 		
 		Map<String, List<IStrategy>> rnsGet = new HashMap<String, List<IStrategy>>();
 		rnsCRUD.put("GET", rnsGet);
-		
-		// Inserir regras quando as tiver
 	}
 	
 	private String executarRegras(EntidadeDominio entidade, String operacao) {
@@ -108,10 +120,9 @@ public class Facade implements IFacade {
 		String nomeClasse = entidade.getClass().getName();
 		String msg = executarRegras(entidade, "READ");
 		if(msg == null)
-			daos.get(nomeClasse).read(entidade);
+			return daos.get(nomeClasse).read(entidade);
 		else
 			return msg;
-		return null;
 	}
 
 	@Override

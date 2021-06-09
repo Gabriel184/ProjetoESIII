@@ -1,5 +1,7 @@
 package br.com.ssp.ematricula.model.business;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 import br.com.ssp.ematricula.model.dao.MatriculaDAO;
@@ -14,14 +16,12 @@ public class ComplementarCodigoMatricula implements IStrategy {
 			Matricula m = (Matricula) entidade;
 			StringBuilder sb = new StringBuilder();
 			MatriculaDAO matDAO = MatriculaDAO.getInstancia();
-			sb.append(m.getDataCadastro().get(Calendar.YEAR));
-			sb.append(m.getDataCadastro().get(Calendar.MONTH));
-			sb.append(m.getDataCadastro().get(Calendar.DAY_OF_MONTH));
+			DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyyMMddhhmmss");
+			sb.append(LocalDateTime.now().format(pattern));
 			sb.append("-");
 			sb.append(m.getCurso().getDescricao().toLowerCase().trim());
 			sb.append("-");
 			sb.append(m.getTurma().trim().toLowerCase().charAt(0));
-			sb.append(matDAO.count(m));
 			m.setCodigo(sb.toString());
 			return null;
 		}

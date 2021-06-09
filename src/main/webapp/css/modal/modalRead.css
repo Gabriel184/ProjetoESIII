@@ -1,0 +1,50 @@
+.dados_descricao{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.matricula{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.container_matricula{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 10px;
+}
+
+.aluno{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.container_aluno{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 10px;
+}
+
+.endereco{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.container_endereco{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 10px;
+}
+
+.curso{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.container_curso{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 10px;
+}

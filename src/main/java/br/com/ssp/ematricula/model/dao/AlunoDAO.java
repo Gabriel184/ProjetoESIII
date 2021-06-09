@@ -195,8 +195,88 @@ public class AlunoDAO extends AbstractJdbcDAO {
 
 	@Override
 	public void update(EntidadeDominio entidade) {
-		// TODO Auto-generated method stub
-
+		if(connection == null) {
+			openConnection();
+		} else {
+			try {
+				if(connection.isClosed())
+					openConnection();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		PreparedStatement pst = null;
+		StringBuilder sql = new StringBuilder();
+		
+		Aluno alu = (Aluno) entidade;
+		
+		sql.append("UPDATE aluno SET");		
+		
+		try {
+			connection.setAutoCommit(false);
+			
+			EnderecoDAO endDAO = new EnderecoDAO(connection);
+			endDAO.ctrlTransaction = false;
+			Endereco end = alu.getEndereco();
+			
+			if(!end.isEmpty()) {				
+				if(endDAO.verifyEndereco(end))
+					end.setId(((Endereco) endDAO.read(end)).getId());
+				else
+					endDAO.create(end);
+				alu.getEndereco().setId(end.getId());
+			}
+			
+			boolean havePreviousArgs = false;
+			if(!alu.getNome().equals("")) {
+				sql.append(" nome = '" + alu.getNome() + "'");
+				havePreviousArgs = true;
+			}
+			if(!alu.getEmail().equals("")) {
+				if(havePreviousArgs)
+					sql.append(",");
+				sql.append(" email = '" + alu.getEmail() + "'");
+				havePreviousArgs = true;
+			}
+			if(!alu.getTelefone().equals("")) {
+				if(havePreviousArgs)
+					sql.append(",");
+				sql.append(" telefone = '" + alu.getTelefone() + "'");
+				havePreviousArgs = true;
+			}
+			if(!alu.getEndereco().isEmpty()) {
+				if(havePreviousArgs)
+					sql.append(",");
+				sql.append(" end_id = " + alu.getEndereco().getId());
+			}
+			sql.append(" WHERE cpf = ?");
+			
+			pst = connection.prepareStatement(sql.toString());
+			
+			pst.setString(1, alu.getCpf());
+			
+			pst.executeUpdate();
+			
+			connection.commit();
+		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			if(ctrlTransaction) {
+				try {
+					pst.close();
+					if(ctrlTransaction) {
+						connection.close();
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	@Override

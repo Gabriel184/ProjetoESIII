@@ -58,15 +58,20 @@ public class MatriculaVH extends AbstractVH {
 			);
 			return matricula;
 		}
+		if(request.getParameter("operacao").equals("consultar")) {
+			Matricula matricula = new Matricula();
+			matricula.setCodigo(request.getParameter("codigo"));
+			return matricula;
+		}
 		if(request.getParameter("operacao").equals("atualizar")) {
 			Matricula matricula = new Matricula(
-				request.getParameter("codigo"),
+				"",
 				null,
-				(request.getParameter("turma") == null) ? "" : request.getParameter("turma"),
+				"",
 				new Aluno(
 						(request.getParameter("nome") == null) ? "" : request.getParameter("nome"),
 						(request.getParameter("email") == null) ? "" : request.getParameter("email"),
-						"",
+						(request.getParameter("cpf") == null) ? "" : request.getParameter("cpf"),
 						(request.getParameter("telefone") == null) ? "" : request.getParameter("telefone"),
 						null,
 						new Endereco(
@@ -84,14 +89,17 @@ public class MatriculaVH extends AbstractVH {
 								)
 						)
 				),
-				new Curso(
-						(request.getParameter("curso_nome") == null) ? "" : request.getParameter("curso_nome"),
-						InsertParser.StrToInt(request.getParameter("curso_duracao"), Integer.MIN_VALUE),
-						new Categoria(
-								(request.getParameter("categoria") == null) ? "" : request.getParameter("categoria")
-						)
-				)
+				null
 			);
+			return matricula;
+		}
+		if(request.getParameter("operacao").equals("excluir")) {
+			Matricula matricula = new Matricula();
+			matricula.setCodigo(request.getParameter("codigo"));
+			return matricula;
+		}
+		if(request.getParameter("operacao").equals("get")) {
+			Matricula matricula = new Matricula();
 			return matricula;
 		}
 		return null;

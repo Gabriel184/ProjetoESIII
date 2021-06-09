@@ -1,0 +1,13 @@
+Aluno:
+	cpf (trancado)
+	nome
+	email
+	telefone
+Endereco:
+	cep
+	rua (trancado)
+	numero
+	complemento
+	bairro (trancado)
+	cidade (trancado)
+	estado (trancado)

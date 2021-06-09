@@ -1,6 +1,8 @@
 package br.com.ssp.ematricula.test;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -11,7 +13,12 @@ import br.com.ssp.ematricula.model.domain.Matricula;
 
 public class Test {
 	public static void main(String[] args) {
-		test4();
+		test5();
+	}
+	
+	public static void test5() {
+		DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyyMMddhhmmss");
+		System.out.println(LocalDateTime.now().format(pattern));
 	}
 	
 	public static void test4() {

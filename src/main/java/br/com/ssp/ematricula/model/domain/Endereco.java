@@ -62,4 +62,17 @@ public class Endereco extends EntidadeDominio {
 		this.cidade = cidade;
 	}
 	
+	public boolean isEmpty() {
+		if(this.codigo.equals("") && 
+				this.cep.equals("") &&
+				this.numero == Integer.MIN_VALUE &&
+				this.logradouro.equals("") &&
+				this.complemento.equals("") &&
+				this.bairro.equals("") &&
+				this.cidade.getDescricao().equals("") &&
+				this.cidade.getEstado().getDescricao().equals(""))
+			return true;
+		return false;
+	}
+	
 }

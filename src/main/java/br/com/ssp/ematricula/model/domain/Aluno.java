@@ -56,4 +56,15 @@ public class Aluno extends EntidadeDominio {
 		this.endereco = endereco;
 	}
 	
+	public boolean isEmpty() {
+		if(nome.equals("") &&
+				email.equals("") &&
+				cpf.equals("") &&
+				telefone.equals("") &&
+				dataNascimento == null &&
+				endereco.isEmpty())
+			return true;
+		return false;
+	}
+	
 }

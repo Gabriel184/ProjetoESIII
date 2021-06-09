@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -18,6 +19,7 @@ import br.com.ssp.ematricula.model.domain.Endereco;
 import br.com.ssp.ematricula.model.domain.EntidadeDominio;
 import br.com.ssp.ematricula.model.domain.Estado;
 import br.com.ssp.ematricula.model.domain.Matricula;
+import br.com.ssp.ematricula.model.domain.MatriculaSimplificada;
 
 public class MatriculaDAO extends AbstractJdbcDAO {
 	
@@ -218,14 +220,116 @@ public class MatriculaDAO extends AbstractJdbcDAO {
 
 	@Override
 	public void update(EntidadeDominio entidade) {
-		// TODO Auto-generated method stub
-
+		Matricula mat = (Matricula) entidade;
+		if(!mat.getAluno().isEmpty()) {
+			AlunoDAO aluDAO = AlunoDAO.getInstancia();
+			aluDAO.update(mat.getAluno());
+		}
+		
+	}
+	
+	@Override
+	public void delete(EntidadeDominio entidade) {
+		openConnection();
+		PreparedStatement pst = null;
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("DELETE FROM ");
+		sb.append("matricula");
+		sb.append(" WHERE ");
+		sb.append("codigo");
+		sb.append(" = ");
+		sb.append("?");
+		
+		try {
+			connection.setAutoCommit(false);
+			pst = connection.prepareStatement(sb.toString());
+			pst.setString(1, ((Matricula) entidade).getCodigo());
+			
+			pst.executeUpdate();
+			connection.commit();
+		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();			
+		} finally {
+			try {
+				pst.close();
+				if(ctrlTransaction)
+					connection.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
 	public List<EntidadeDominio> get(EntidadeDominio entidade) {
-		// TODO Auto-generated method stub
-		return null;
+		if(connection == null) {
+			openConnection();
+		} else {
+			try {
+				if(connection.isClosed())
+					openConnection();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		PreparedStatement pst = null;
+		StringBuilder sql = new StringBuilder();
+		
+		List<EntidadeDominio> matriculas = new ArrayList<EntidadeDominio>();
+		
+		sql.append("SELECT m1.codigo, m1.data_cadastro, a1.nome, a1.email, e1.cidade, e1.estado, c1.descricao from matricula as m1 "
+				+ "INNER JOIN aluno AS a1 ON m1.alu_id = a1.id_alu "
+				+ "INNER JOIN endereco AS e1 ON a1.end_id = e1.id_end "
+				+ "INNER JOIN curso AS c1 ON m1.cur_id = c1.id_cur");
+		
+		try {
+			connection.setAutoCommit(false);
+			pst = connection.prepareStatement(sql.toString());
+			
+			ResultSet rs = pst.executeQuery();
+			
+			while(rs.next()) {
+				MatriculaSimplificada mSimp = new MatriculaSimplificada(
+						rs.getString("codigo"),
+						new GregorianCalendar(
+								Integer.parseInt(rs.getString("data_cadastro").substring(0,4)),
+								Integer.parseInt(rs.getString("data_cadastro").substring(5,7))-1,
+								Integer.parseInt(rs.getString("data_cadastro").substring(8,10))
+						),
+						rs.getString("nome"),
+						rs.getString("email"),
+						rs.getString("cidade") + " - " + rs.getString("estado"),
+						rs.getString("descricao")
+				);
+				matriculas.add(mSimp);
+			}
+			connection.commit();
+		} catch(SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			if(ctrlTransaction) {
+				try {
+					pst.close();
+					if(ctrlTransaction) {
+						connection.close();
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return matriculas;
 	}
 	
 	public int count(Matricula matricula) {

@@ -4,20 +4,15 @@ import br.com.ssp.ematricula.model.domain.Endereco;
 import br.com.ssp.ematricula.model.domain.EntidadeDominio;
 import br.com.ssp.ematricula.model.domain.Matricula;
 
-public class ComplementarCodigoEndereco implements IStrategy {
+public class ValidarEnderecoUpdate implements IStrategy {
 
 	@Override
 	public String processar(EntidadeDominio entidade) {
 		if(entidade instanceof Matricula) {
-			Endereco e = ((Matricula) entidade).getAluno().getEndereco();
-			if(!e.isEmpty()) {
-				StringBuilder sb = new StringBuilder();
-				sb.append(e.getCep());
-				sb.append(e.getNumero());
-				sb.append(e.getComplemento().trim());
-				e.setCodigo(sb.toString());
-				return null;				
-			}
+			Matricula mat = (Matricula) entidade;
+			Endereco end = mat.getAluno().getEndereco();
+			if(!end.getCep().equals("") && end.getNumero() == Integer.MIN_VALUE)
+				return "Não se pode alterar o endereço sem definir o número da residência";
 			return null;
 		}
 		return "Entidade incorreta";

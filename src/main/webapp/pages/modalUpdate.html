@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/global/global.css">
+    <link rel="stylesheet" href="../css/modal/modal.css">
+    <link rel="stylesheet" href="../css/modal/modalUpdate.css">
+    <title>UPDATE MODAL</title>
+</head>
+<body>
+    <button onclick="onModalUpdate()">Abrir modal</button>
+    <div id="container_modal" class="container_modal">
+        <div class="subcontainer_modal">
+            <div class="base_modal">
+                <div class="titulo_modal">
+                    <p>ATUALIZAR:</p>
+                    <img class="fechar_modal" src="../images/fechar.png" alt="fechar" onclick="offModalUpdate()">
+                </div>
+                <label for="" class="container">CPF:
+                    <input type="text" name="cpf" readonly>
+                </label>
+                <label for="" class="container">Nome:
+                    <input type="text" name="nome">
+                </label>
+                <label for="" class="container">Email:
+                    <input type="text" name="email">
+                </label>
+                <label for="" class="container">Celular:
+                    <input type="text" name="telefone">
+                </label>
+                <label for="" class="container">CEP:
+                    <input type="text">
+                </label>
+                <label for="" class="container">Logradouro:
+                    <input type="text" name="logradouro" readonly>
+                </label>
+                <label for="" class="container">Número:
+                    <input type="text" name="numero">
+                </label>
+                <label for="" class="container">Complemento:
+                    <input type="text" name="complemento">
+                </label>
+                <label for="" class="container">Bairro:
+                    <input type="text" name="bairro" readonly>
+                </label>
+                <label for="" class="container">Cidade:
+                    <input type="text" name="cidade" readonly>
+                </label>
+                <label for="" class="container">Estado:
+                    <input type="text" name="estado" readonly>
+                </label>
+            <div class="container_botoes_modal">
+                <input type="submit" value="Atualizar" class="item_botao_modal">
+            </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    function onModalUpdate(dado) {
+        var modalRead = document.getElementById("container_modal")
+        modalRead.style.display = "block"
+    }
+
+    function offModalUpdate() {
+        var modalRead = document.getElementById("container_modal")
+        modalRead.style.display = "none"
+    }
+</script>

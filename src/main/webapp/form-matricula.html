@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-
         $(document).ready(function() {
 
             function limpa_formulário_cep() {
@@ -69,7 +68,6 @@
                 }
             });
         });
-
     </script>
     <title>e-matricula</title>
 </head>
@@ -159,8 +157,6 @@
                 },
                 success : function(msg) {
                     $('#resultado').html('')
-                    console.table(msg.status)
-                    console.table(msg.mensagem)
                     if(msg.status == 'success') {
                         var cursosSelect = document.getElementById('cursos')
                         while(cursosSelect.firstChild)
